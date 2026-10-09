@@ -4,38 +4,6 @@ A hands-on DevOps project demonstrating how to containerize a web application an
 
 This setup mirrors production Amazon EKS workflows—including multi-node pod scheduling, internal service load balancing, and container orchestration—without incurring cloud infrastructure costs.
 
-# Cluster Architecture
-
-                     +-------------------------------------------------------+
-                                     |
-                     |  (Browser: localhost:8080 <-> kubectl port-forward)   |
-                     +---------------------------+---------------------------+
-                                                 |
-                                                 v
-+-------------------------------------------------------------------------------------------------+
-| KinD Cluster: "eks-cluster"                                                                         |
-|                                                                                                 |
-|   +---------------------------------+                                                           |
-|   |   Control-Plane Node            |                                                           |
-|   |   (eks-cluster-control-plane)      |                                                           |
-|   |   - API Server & Etcd           |                                                           |
-|   +---------------------------------+                                                           |
-|                                                                                                 |
-|   +-----------------------------------------------------------------------------------------+   |
-|   | Kubernetes Service: "hello-kubernetes-service" (ClusterIP / Port 80)                    |   |
-|   +--------------------------------------------+--------------------------------------------+   |
-|                                                |                                                |
-|                        +-----------------------+-----------------------+                        |
-|                        |                                               |                        |
-|                        v                                               v                        |
-|   +----------------------------------------+      +----------------------------------------+   |
-|   | Worker Node 1: "eks-cluster-worker"      |      | Worker Node 2: "eks-cluster-worker2"     |   |
-|   |                                        |      |                                        |   |
-|   |  [ Pod 1 ]         [ Pod 2 ]           |      |  [ Pod 3 ]         [ Pod 4 ]           |   |
-|   |  hello-k8s         hello-k8s           |      |  hello-k8s         hello-k8s           |   |
-|   +----------------------------------------+      +----------------------------------------+   |
-+-------------------------------------------------------------------------------------------------+
-
 
 # Tech Stack
 
@@ -120,5 +88,5 @@ Declarative Infrastructure: Defined all Kubernetes resources (Deployment, Servic
 
 To delete the cluster and release all associated CPU/RAM resources:
 
-kind delete cluster --name eks-demo
+kind delete cluster --name eks-cluster
 
